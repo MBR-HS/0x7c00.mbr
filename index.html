@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>开发者选项跳转工具</title>
+    <title>开发者选项跳转工具 - 完整版</title>
     <style>
         * {
             margin: 0;
@@ -22,71 +22,87 @@
         .card {
             background: #ffffff;
             border-radius: 20px;
-            padding: 36px 28px 32px;
-            max-width: 420px;
+            padding: 28px 24px 32px;
+            max-width: 480px;
             width: 100%;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
             text-align: center;
         }
         .card h1 {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 600;
             color: #1e293b;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
         .card .sub {
-            font-size: 14px;
+            font-size: 13px;
             color: #94a3b8;
-            margin-bottom: 28px;
+            margin-bottom: 24px;
+        }
+        .divider {
+            border: none;
+            border-top: 1px solid #e9edf2;
+            margin: 18px 0;
         }
         .btn-group {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 12px;
         }
         .btn {
             display: block;
             width: 100%;
-            padding: 16px 12px;
+            padding: 14px 12px;
             border: none;
-            border-radius: 14px;
-            font-size: 16px;
+            border-radius: 12px;
+            font-size: 15px;
             font-weight: 500;
             color: #ffffff;
-            background: #3b82f6;
             cursor: pointer;
             transition: background 0.2s, transform 0.1s;
             text-align: center;
-            text-decoration: none;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
         .btn:active {
             transform: scale(0.97);
         }
-        .btn-primary { background: #3b82f6; }
-        .btn-primary:hover { background: #2563eb; }
+        .btn-blue { background: #3b82f6; }
+        .btn-blue:hover { background: #2563eb; }
 
-        .btn-success { background: #22c55e; }
-        .btn-success:hover { background: #16a34a; }
+        .btn-green { background: #22c55e; }
+        .btn-green:hover { background: #16a34a; }
 
-        .btn-warning { background: #f59e0b; }
-        .btn-warning:hover { background: #d97706; }
+        .btn-amber { background: #f59e0b; }
+        .btn-amber:hover { background: #d97706; }
 
-        .btn-secondary { background: #8b8fa7; }
-        .btn-secondary:hover { background: #6b6f87; }
+        .btn-purple { background: #8b5cf6; }
+        .btn-purple:hover { background: #7c3aed; }
 
-        .btn .badge {
+        .btn-pink { background: #ec4899; }
+        .btn-pink:hover { background: #db2777; }
+
+        .btn-gray { background: #8b8fa7; }
+        .btn-gray:hover { background: #6b6f87; }
+
+        .badge {
             display: inline-block;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 400;
             background: rgba(255,255,255,0.25);
             padding: 0 10px;
             border-radius: 20px;
-            margin-left: 8px;
+            margin-left: 6px;
+        }
+        .section-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #64748b;
+            text-align: left;
+            margin: 6px 0 8px;
         }
         .footer-note {
-            margin-top: 22px;
+            margin-top: 20px;
             font-size: 13px;
             color: #94a3b8;
             background: #f8fafc;
@@ -96,7 +112,7 @@
             text-align: left;
         }
         .footer-note code {
-            font-size: 12px;
+            font-size: 11px;
             background: #eef2f6;
             padding: 0 6px;
             border-radius: 4px;
@@ -109,49 +125,52 @@
 
 <div class="card">
     <h1>🔧 开发者选项跳转</h1>
-    <p class="sub">点击下方按钮尝试直接打开开发者设置</p>
+    <p class="sub">完整版 · 共 6 种尝试方式</p>
 
+    <!-- 第一组：早期入口 -->
+    <div class="section-title">📌 早期入口（Activity）</div>
     <div class="btn-group">
-        <!-- 按钮1：经典入口 -->
-        <button class="btn btn-primary" onclick="jumpTo('classic')">
-            📌 直接调用开发者选项 Activity
-        </button>
+        <button class="btn btn-blue" onclick="jumpTo('classic')">直接调用开发者选项 Activity</button>
+        <button class="btn btn-green" onclick="jumpTo('dashboard')">新版开发者选项 Dashboard</button>
+        <button class="btn btn-amber" onclick="jumpTo('legacy')">旧版开发者设置</button>
+    </div>
 
-        <!-- 按钮2：新版Dashboard -->
-        <button class="btn btn-success" onclick="jumpTo('dashboard')">
-            🆕 新版开发者选项 Dashboard
-        </button>
+    <hr class="divider" />
 
-        <!-- 按钮3：旧版（备用） -->
-        <button class="btn btn-warning" onclick="jumpTo('legacy')">
-            ⏳ 旧版开发者设置
-        </button>
+    <!-- 第二组：新发现的底层入口 -->
+    <div class="section-title">🧩 底层入口（Intent Action / Fragment）</div>
+    <div class="btn-group">
+        <button class="btn btn-purple" onclick="jumpTo('standard_action')">系统标准动作 (APPLICATION_DEVELOPMENT_SETTINGS)</button>
+        <button class="btn btn-pink" onclick="jumpTo('fragment_subsettings')">SubSettings 加载开发者选项 Fragment</button>
+        <button class="btn btn-pink" onclick="jumpTo('fragment_settingsactivity')">SettingsActivity 加载开发者选项 Fragment</button>
     </div>
 
     <div class="footer-note">
-        💡 若点击后无反应或闪退，说明该入口已被系统屏蔽。<br/>
-        三个都无效时，请尝试电脑 ADB 连接方式。
+        💡 点击后若跳转到开发者选项界面，即为成功。<br/>
+        若<strong>无反应或闪退</strong>，说明该入口已被系统屏蔽。<br/>
+        六个都无效时，请放弃此路径。
     </div>
 </div>
 
 <script>
     /**
-     * 三个跳转目标
+     * 六个跳转目标
      */
     const INTENTS = {
-        // 1. 经典开发者选项 Activity (最常见)
+        // 第一组：早期 Activity 入口
         classic: 'intent:#Intent;component=com.android.settings/.Settings$DevelopmentSettingsActivity;end',
-
-        // 2. 新版开发者选项 Dashboard (Android 9+ 引入)
         dashboard: 'intent:#Intent;component=com.android.settings/.Settings$DevelopmentSettingsDashboardActivity;end',
+        legacy: 'intent:#Intent;component=com.android.settings/.Settings$DevelopmentSettingsActivity;end',
 
-        // 3. 旧版开发者设置 (备选，部分机型可用)
-        legacy: 'intent:#Intent;component=com.android.settings/.Settings$DevelopmentSettingsActivity;end'
+        // 第二组：新发现的底层入口
+        standard_action: 'intent:#Intent;action=android.settings.APPLICATION_DEVELOPMENT_SETTINGS;end',
+        fragment_subsettings: 'intent:#Intent;action=android.intent.action.MAIN;launchFlags=0x10810000;component=com.android.settings/.SubSettings;S.%3Asettings%3Ashow_fragment=com.android.settings.development.DevelopmentSettingsDashboardFragment;end',
+        fragment_settingsactivity: 'intent:#Intent;action=android.intent.action.MAIN;launchFlags=0x10810000;component=com.android.settings/.SettingsActivity;S.%3Asettings%3Ashow_fragment=com.android.settings.development.DevelopmentSettingsDashboardFragment;end'
     };
 
     /**
      * 执行跳转
-     * @param {string} key - 'classic' | 'dashboard' | 'legacy'
+     * @param {string} key - 跳转目标的键名
      */
     function jumpTo(key) {
         const uri = INTENTS[key];
@@ -161,28 +180,18 @@
         }
 
         try {
-            // 方法1：通过 location.href 跳转（最常用）
+            // 通过 location.href 触发 Intent
             window.location.href = uri;
-
-            // 方法2（备选）：如果上面无效，尝试通过创建 iframe 触发
-            // 部分浏览器对 location.href 拦截时，iframe 方式可能有效
-            // 但为了简洁，这里优先使用 location.href
-
-            // 设置一个 2 秒的“保底”提示（如果跳转成功，页面会离开，这个提示不会出现）
-            setTimeout(() => {
-                // 如果 2 秒后页面还在，说明跳转可能未成功
-                // 但不弹框干扰用户，静默即可
-            }, 2000);
-
         } catch (e) {
             console.error('跳转异常:', e);
             alert('跳转失败，请尝试其他方式。\n' + e.message);
         }
     }
 
-    // 可选：在控制台暴露，方便调试
-    console.log('开发者选项跳转工具已加载');
+    // 在控制台输出帮助信息
+    console.log('🔧 开发者选项跳转工具已加载');
     console.log('可用的跳转目标:', Object.keys(INTENTS));
+    console.log('点击按钮即可尝试跳转。');
 </script>
 
 </body>
